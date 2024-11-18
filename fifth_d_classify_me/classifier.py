@@ -7,11 +7,13 @@ from .classifier_prompts import ClassifierPrompts
 
 
 class ClassifierResponse(BaseModel):
+    """Response from the classifier"""
     result: list[str]
     reasoning: str
 
 
 class Classifier:
+    """Classifier class"""
     client: openai.OpenAI
 
     def __init__(
@@ -32,7 +34,8 @@ class Classifier:
     def is_result_data_valid_classes(
         self, classes: list[dict], result: list[str]
     ) -> bool:
-        if len(result) == 0 or len(classes) == 0:  # No need to validate anything
+        """Validate the result data against the classes"""
+        if len(result) == 0 or len(classes) == 0:
             return True
 
         classes_ids = [item["class_id"] for item in classes]
@@ -45,6 +48,7 @@ class Classifier:
     def classify(
         self, query: str, classes: list[dict], options: dict
     ) -> ClassifierResponse:
+        """Classify the query using the classes"""
         # PERF: caching: check a hash of input to return existing result with expiry however caching can be a problem if we cache without evaluating the query
         system_prompt = (
             self.prompts.multilabel_prompt(classes)
@@ -67,7 +71,9 @@ class Classifier:
         # NOTE: potentially run the result against another AI query in the chain to validate and enhance the response is correct and not just a partial match to the classes which could act as a tip, however it will incur a cost
         try:
             # Validate classes response first
-            response = ClassifierResponse(**json.loads(response.choices[0].message.content))  # type: ignore
+            response = ClassifierResponse(
+                # type: ignore
+                **json.loads(response.choices[0].message.content))
             if self.is_result_data_valid_classes(classes, response.result):
                 return response
             else:

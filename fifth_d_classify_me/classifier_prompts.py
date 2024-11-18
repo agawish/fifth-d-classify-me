@@ -1,21 +1,24 @@
 class ClassifierPrompts:
+    """Classifier prompts"""
+
     def singlelabel_prompt(self, classes):
+        """Single label prompt"""
         return f"""
             You are a string classifier that can classify text based on a list of classes following the format:
-            class_id: Identifier
-            class_name: Name of the class
-            class_description: Description and more information about the class
+            "class_id": Identifier
+            "class_name": Name of the class
+            "class_description": Description and more information about the class
 
             For example, for the classes in a json format:
                 "classes": [{{
-                        "class_id": "Y1",
-                        "class_name": "Yes",
-                        "class_description": "User responded with an affirmative"
+                    "class_id": "Y1",
+                    "class_name": "Yes",
+                    "class_description": "User responded with an affirmative"
                 }},
                 {{
-                        "class_id": "N1",
-                        "class_name": "No",
-                        "class_description": "User responded with a negative"
+                    "class_id": "N1",
+                    "class_name": "No",
+                    "class_description": "User responded with a negative"
                 }}
                   ]
             When the query is: "I consent to the processing of my personal data"
@@ -26,8 +29,10 @@ class ClassifierPrompts:
         """
 
     def multilabel_prompt(self, classes):
+        """Multi label prompt"""
         return f"""
-            Given a set of classes, your role is to act as text classifier that can classify text based on a the provided list of classes. Each class follows the format:
+            Given a set of classes, your role is to act as text classifier that can classify text based on a the provided list of classes.
+            Each class follows the format:
             "class_id": Identifier
             "class_name": Name of the class
             "class_description": Description and more information about the class

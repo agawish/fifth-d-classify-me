@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 
@@ -11,6 +10,7 @@ app = Flask(__name__)
 
 @app.route("/classify", methods=["POST"])
 def classify():
+    """Classify a query using OpenAI's GPT-3.5 API."""
     req = request.get_json(force=True)
     query = req["query"]  # str
     classes = req["classes"]  # list of dicts
@@ -25,12 +25,14 @@ def classify():
 
 
 def get_top_p():
+    """Get the top_p value from the command line arguments."""
     if len(sys.argv) >= 3:
         return float(sys.argv[2]) or 1.0
     return 1.0
 
 
 def get_temperature():
+    """Get the temperature value from the command line arguments."""
     if len(sys.argv) >= 2:
         return float(sys.argv[1]) or 0.0
     return 0.0
@@ -38,6 +40,7 @@ def get_temperature():
 
 if __name__ == "__main__":
     print(
-        f"Running server with Temperature: {get_temperature()} and Top P: {get_top_p()}",
+        f"Running server with Temperature: {get_temperature()} and Top P: {
+            get_top_p()}",
     )
     app.run(port=8000, debug=True)
