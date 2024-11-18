@@ -85,7 +85,7 @@ def main():
     test_cases = [
         "case_1.json",
         "case_2.json",
-        # "case_3.json",
+        "case_3.json",
     ]
     test_cases = [os.path.join(data_dir, test_case) for test_case in test_cases]
     avg_acc = iterate_test_cases(test_cases)
