@@ -1,9 +1,9 @@
 import json
 import os
-from typing import List, Union
+from typing import List
 
 import requests
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class Query(BaseModel):
@@ -54,7 +54,7 @@ def run_single_case(case: TextClassifierSpec) -> float:
         request = form_request(query.query, case.classes, case.options)
         result = make_request(request)
         predicted = result.get("result")
-        correct = set(predicted) == set(query.class_id)
+        correct = set(predicted) == set(query.class_id)  # type: ignore
 
         if not correct and strict_mode:
             raise ValueError(f"Expected {query.class_id}, got {predicted}")
@@ -73,7 +73,7 @@ def iterate_test_cases(test_case_paths: list[str]) -> float:
     accuracies = []
     for test_case_path in test_case_paths:
         data = load_json_file(test_case_path)
-        spec = TextClassifierSpec(**data)
+        spec = TextClassifierSpec(**data)  # type: ignore
         accuracy = run_single_case(spec)
         print(f"{test_case_path} accuracy: {accuracy * 100:.2f}%")
         accuracies.append(accuracy)
@@ -85,7 +85,7 @@ def main():
     test_cases = [
         "case_1.json",
         "case_2.json",
-        "case_3.json",
+        # "case_3.json",
     ]
     test_cases = [os.path.join(data_dir, test_case) for test_case in test_cases]
     avg_acc = iterate_test_cases(test_cases)

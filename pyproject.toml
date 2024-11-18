@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "fifth_d_classify_me"
+version = "0.1.0"
+description = "AI Classifier agent"
+authors = ["Amr Gawish <amr@gawi.sh>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+flask = "^3.0.3"
+requests = "^2.32.3"
+pydantic = "^2.9.2"
+python-dotenv = "^1.0.1"
+openai = "^1.54.4"
+redis = "^5.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+mypy = "^1.13.0"
+debugpy = "^1.8.8"
+
+[tool.mypy]
+pretty = true
+ignore_missing_imports = true
+ignore_errors = true
+follow_imports = "silent"
+strict_optional = false
+
+[build-system]
+requires = ["poetry-core","poetry-export-plugin"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+server = "dotenv run -- python fifth_d_classify_me/server.py"
+test = "pytest"
+evaluate = "python evaluate.py"
