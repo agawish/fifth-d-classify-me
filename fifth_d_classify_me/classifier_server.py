@@ -4,7 +4,7 @@ import sys
 
 from flask import Flask, request
 
-from classifier import Classifier
+from fifth_d_classify_me.classifier import Classifier
 
 app = Flask(__name__)
 
@@ -21,8 +21,7 @@ def classify():
         top_p=get_top_p(),
     )
     result = classifier.classify(query, classes, options)
-    print(f"result: {result}")
-    return json.dumps(result)
+    return result.model_dump_json()
 
 
 def get_top_p():
