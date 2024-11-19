@@ -6,6 +6,14 @@ from pydantic import BaseModel, ValidationError
 from .classifier_prompts import ClassifierPrompts
 
 
+class ClassifyRequest(BaseModel):
+    """Request schema for the classify endpoint."""
+
+    query: str
+    classes: list[dict]
+    options: dict
+
+
 class ClassifierResponse(BaseModel):
     """Response from the classifier"""
     result: list[str]
@@ -46,10 +54,13 @@ class Classifier:
         return True
 
     def classify(
-        self, query: str, classes: list[dict], options: dict
+        self, request: ClassifyRequest
     ) -> ClassifierResponse:
         """Classify the query using the classes"""
         # PERF: caching: check a hash of input to return existing result with expiry however caching can be a problem if we cache without evaluating the query
+        classes = request.classes
+        options = request.options
+        query = request.query
         system_prompt = (
             self.prompts.multilabel_prompt(classes)
             if options.get("multilabel")

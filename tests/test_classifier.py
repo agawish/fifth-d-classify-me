@@ -2,7 +2,7 @@ import json
 import unittest
 from unittest import mock
 
-from fifth_d_classify_me.classifier import Classifier
+from fifth_d_classify_me.classifier import Classifier, ClassifyRequest
 
 
 class ClassifierTestSuite(unittest.TestCase):
@@ -18,31 +18,33 @@ class ClassifierTestSuite(unittest.TestCase):
         )
         ai_classifier = Classifier(
             open_ai_api_key="fake_key",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
         )
         result = ai_classifier.classify(
-            query="I'm craving for some chocolate ice cream today.",
-            classes=[
-                {
-                    "class_id": "Y1",
-                    "class_name": "Yes",
-                    "class_description": "User responded with an affirmative",
-                },
-                {
-                    "class_id": "N1",
-                    "class_name": "No",
-                    "class_description": "User responded with a negative",
-                },
-            ],
-            options={
-                "multilabel": False,
-            },
+            ClassifyRequest(
+                query="I'm craving for some chocolate ice cream today.",
+                classes=[
+                    {
+                        "class_id": "Y1",
+                        "class_name": "Yes",
+                        "class_description": "User responded with an affirmative",
+                    },
+                    {
+                        "class_id": "N1",
+                        "class_name": "No",
+                        "class_description": "User responded with a negative",
+                    },
+                ],
+                options={
+                    "multilabel": False,
+                }),
         )
         assert result.result == ["Y1"]
         mock_openai.OpenAI().chat.completions.create.assert_called_once()
         mock_openai.OpenAI().chat.completions.create.assert_called_with(
-            model="gpt-3.5-turbo",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
             messages=mock.ANY,
@@ -62,31 +64,33 @@ class ClassifierTestSuite(unittest.TestCase):
         )
         ai_classifier = Classifier(
             open_ai_api_key="fake_key",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
         )
         result = ai_classifier.classify(
-            query="I'm craving for some chocolate ice cream today.",
-            classes=[
-                {
-                    "class_id": "C1",
-                    "class_name": "Chocolate Ice Cream",
-                    "class_description": "With real chocolate",
-                },
-                {
-                    "class_id": "V1",
-                    "class_name": "Vanilla Ice Cream",
-                    "class_description": "Made with real Madagascan vanilla",
-                },
-            ],
-            options={
-                "multilabel": True,
-            },
+            ClassifyRequest(
+                query="I'm craving for some chocolate ice cream today.",
+                classes=[
+                    {
+                        "class_id": "C1",
+                        "class_name": "Chocolate Ice Cream",
+                        "class_description": "With real chocolate",
+                    },
+                    {
+                        "class_id": "V1",
+                        "class_name": "Vanilla Ice Cream",
+                        "class_description": "Made with real Madagascan vanilla",
+                    },
+                ],
+                options={
+                    "multilabel": True,
+                }),
         )
         assert result.result == ["V1", "C1"]
         mock_openai.OpenAI().chat.completions.create.assert_called_once()
         mock_openai.OpenAI().chat.completions.create.assert_called_with(
-            model="gpt-3.5-turbo",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
             messages=mock.ANY,
@@ -106,32 +110,34 @@ class ClassifierTestSuite(unittest.TestCase):
         )
         ai_classifier = Classifier(
             open_ai_api_key="fake_key",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
         )
         result = ai_classifier.classify(
-            query="I'm craving for some chocolate ice cream today.",
-            classes=[
-                {
-                    "class_id": "Y1",
-                    "class_name": "Yes",
-                    "class_description": "User responded with an affirmative",
-                },
-                {
-                    "class_id": "N1",
-                    "class_name": "No",
-                    "class_description": "User responded with a negative",
-                },
-            ],
-            options={
-                "multilabel": False,
-            },
+            ClassifyRequest(
+                query="I'm craving for some chocolate ice cream today.",
+                classes=[
+                    {
+                        "class_id": "Y1",
+                        "class_name": "Yes",
+                        "class_description": "User responded with an affirmative",
+                    },
+                    {
+                        "class_id": "N1",
+                        "class_name": "No",
+                        "class_description": "User responded with a negative",
+                    },
+                ],
+                options={
+                    "multilabel": False,
+                }),
         )
         assert result.result == []
         assert result.reasoning == ""
         mock_openai.OpenAI().chat.completions.create.assert_called_once()
         mock_openai.OpenAI().chat.completions.create.assert_called_with(
-            model="gpt-3.5-turbo",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
             messages=mock.ANY,
@@ -150,32 +156,34 @@ class ClassifierTestSuite(unittest.TestCase):
         )
         ai_classifier = Classifier(
             open_ai_api_key="fake_key",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
         )
         result = ai_classifier.classify(
-            query="I'm craving for some chocolate ice cream today.",
-            classes=[
-                {
-                    "class_id": "Y1",
-                    "class_name": "Yes",
-                    "class_description": "User responded with an affirmative",
-                },
-                {
-                    "class_id": "N1",
-                    "class_name": "No",
-                    "class_description": "User responded with a negative",
-                },
-            ],
-            options={
-                "multilabel": False,
-            },
+            ClassifyRequest(
+                query="I'm craving for some chocolate ice cream today.",
+                classes=[
+                    {
+                        "class_id": "Y1",
+                        "class_name": "Yes",
+                        "class_description": "User responded with an affirmative",
+                    },
+                    {
+                        "class_id": "N1",
+                        "class_name": "No",
+                        "class_description": "User responded with a negative",
+                    },
+                ],
+                options={
+                    "multilabel": False,
+                }),
         )
         assert result.result == []
         assert result.reasoning == ""
         mock_openai.OpenAI().chat.completions.create.assert_called_once()
         mock_openai.OpenAI().chat.completions.create.assert_called_with(
-            model="gpt-3.5-turbo",
+            model="fake-model",
             temperature=0.3,
             top_p=0.3,
             messages=mock.ANY,
