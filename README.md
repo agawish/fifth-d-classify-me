@@ -1,5 +1,29 @@
 # 5D Take Home Technical Test
 
+## How to run unit tests
+
+1. Clone this repo
+2. Run `pip install -r requirements.txt`
+3. Run `pytest`
+
+If you have poetry and poethepoet install you can do:
+1. Run `poetry install`
+2. Run `poe test`
+
+## How to run the evaluation test
+
+1. Clone this repo
+2. Run `pip install -r requirements.txt`
+3. Run `python fifth_d_classify_me/classifier_server.py`
+4. Open a new window and then run `python evaluate.py`
+
+If you have poetry and poethepoet install you can do:
+1. Run `poetry install`
+2. Run `poe server`
+3. Open a new window and then run `poe evaluate`
+
+
+
 ## Specification
 
 Your task is to build a simple web application to do text classification using a large language model. `gpt-3.5-turbo` will be sufficient for the task and should incur minimal cost. The main endpoint for your classification will be a POST request to `/classify`. The JSON payload will have the following structure:
