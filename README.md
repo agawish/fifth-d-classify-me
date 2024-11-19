@@ -13,11 +13,16 @@ If you have poetry and poethepoet install you can do:
 ## How to run the evaluation test
 
 1. Clone this repo
-2. Run `pip install -r requirements.txt`
-3. Run `python fifth_d_classify_me/classifier_server.py`
-4. Open a new window and then run `python evaluate.py`
+2. Create a `.env` file with `OPEN_AI_API_KEY` value
+
+If you have pip installed you can do:
+
+1. Run `pip install -r requirements.txt`
+2. Run `dotenv run -- python fifth_d_classify_me/classifier_server.py`
+3. Open a new window and then run `python evaluate.py`
 
 If you have poetry and poethepoet install you can do:
+
 1. Run `poetry install`
 2. Run `poe server`
 3. Open a new window and then run `poe evaluate`
